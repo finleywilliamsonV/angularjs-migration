@@ -5,5 +5,5 @@ bower_components/
 tmp
 .DS_Store
 .idea
-src/libs
+dist
 data/db.json  
