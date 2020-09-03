@@ -1,8 +1,8 @@
 import * as angular from 'angular';
 import { IContact } from './contact.service';
 import { HttpClient } from '@angular/common/http'
-import {Injectable, Inject} from '@angular/core'
-import {downgradeInjectable} from '@angular/upgrade/static'
+import { Inject } from '@angular/core'
+import { downgradeInjectable } from '@angular/upgrade/static'
 
 export type ContactRouteParams = {
     _page: string,
@@ -11,12 +11,12 @@ export type ContactRouteParams = {
     q: string   // query string
 }
 
-@Injectable()
+
 export class ContactDB {
 
     private readonly apiRoot: string = 'http://localhost:3000/contacts'
-    
-    constructor( @Inject(HttpClient) private http: HttpClient ) { }
+
+    constructor( @Inject( HttpClient ) private http: HttpClient ) { }
 
     query( params: ContactRouteParams ): Promise<Object> {
         const queryResults = this.http.get( this.apiRoot, { params: params } ).toPromise()
@@ -43,4 +43,4 @@ export class ContactDB {
 angular
     .module( "codecraft" )
     // change from service to factory to downgrade
-    .factory( "ContactDB", downgradeInjectable(ContactDB) );
+    .factory( "ContactDB", downgradeInjectable( ContactDB ) );
