@@ -1,4 +1,5 @@
-const path = require('path');
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
     entry: './src/app/main.ts',
@@ -35,9 +36,24 @@ module.exports = {
                         },
                     },
                 ]
+            },
+            {
+                // Mark files inside `@angular/core` as using SystemJS style dynamic imports.
+                // Removing this will cause deprecation warnings to appear.
+                test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
+                parser: { system: true },  // enable SystemJS
             }
         ]
     },
+    plugins: [
+        new webpack.ContextReplacementPlugin(
+            // if you have anymore problems tweet me at @gdi2290
+            // The (\\|\/) piece accounts for path separators for Windows and MacOS
+            /(.+)?angular(\\|\/)core(.+)?/,
+            path.join(__dirname, 'src'), // location of your src
+            {} // a map of your routes
+        )
+    ],
     devtool: 'source-map',
     mode: 'development'
 };
