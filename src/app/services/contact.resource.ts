@@ -1,8 +1,6 @@
-import * as angular from 'angular';
 import { IContact } from './contact.service';
 import { HttpClient } from '@angular/common/http'
 import { Inject } from '@angular/core'
-import { downgradeInjectable } from '@angular/upgrade/static'
 
 export type ContactRouteParams = {
     _page: string,
@@ -18,29 +16,25 @@ export class ContactDB {
 
     constructor( @Inject( HttpClient ) private http: HttpClient ) { }
 
-    query( params: ContactRouteParams ): Promise<Object> {
-        const queryResults = this.http.get( this.apiRoot, { params: params } ).toPromise()
-        return queryResults
+    query( params: ContactRouteParams ): Promise<IContact[]> {
+        return this.http.get<IContact[]>( this.apiRoot, { params: params } ).toPromise()
     }
 
-    get( id, params?: ContactRouteParams ): Promise<Object> {
-        return this.http.get( this.apiRoot + '/' + id, { params: params } ).toPromise()
+    get( id, params?: ContactRouteParams ): Promise<IContact> {
+        return this.http.get<IContact>( this.apiRoot + '/' + id, { params: params } ).toPromise()
     }
 
-    save( person: IContact ): Promise<Object> {
-        return this.http.post( this.apiRoot, person ).toPromise()
+    save( person: IContact ): Promise<IContact> {
+        return this.http.post<IContact>( this.apiRoot, person ).toPromise()
     }
 
-    update( person: IContact ): Promise<Object> {
-        return this.http.put( this.apiRoot + '/' + person.id, person ).toPromise()
+    update( person: IContact ): Promise<IContact> {
+        return this.http.put<IContact>( this.apiRoot + '/' + person.id, person ).toPromise()
     }
 
-    remove( person: IContact ): Promise<Object> {
-        return this.http.delete( this.apiRoot + '/' + person.id ).toPromise()
+    remove( person: IContact ): Promise<IContact> {
+        return this.http.delete<IContact>( this.apiRoot + '/' + person.id ).toPromise()
     }
 }
 
-angular
-    .module( "codecraft" )
-    // change from service to factory to downgrade
-    .factory( "ContactDB", downgradeInjectable( ContactDB ) );
+// removed all angularJS code because this is now a complete Angular service

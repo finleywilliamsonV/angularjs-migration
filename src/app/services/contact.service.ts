@@ -1,4 +1,7 @@
 import * as angular from 'angular'
+import { Inject } from '@angular/core'
+import { downgradeInjectable } from '@angular/upgrade/static'
+
 import * as _ from 'lodash'
 import { ContactDB, ContactRouteParams } from './contact.resource'
 
@@ -42,7 +45,9 @@ export class ContactService {
      * @param ContactDB -- injected 
      * @param toaster  -- injected
      */
-    constructor( private ContactDB: ContactDB, private toaster) {
+    constructor( @Inject(ContactDB) private contactDB: ContactDB,
+                // private toaster -- removing for now
+                ) {
         this.page = 1
         this.hasMore = true
         this.isLoading = false
@@ -99,7 +104,7 @@ export class ContactService {
                 q: this.searchString
             }
 
-            const response = await this.ContactDB.query( params ) as any as IContact[]   // would like this to come back typed as array, but didn't think it was important enough to look into
+            const response: IContact[] = await this.contactDB.query( params )
             this.persons.push( ...response )
 
             if ( response.length === 0 ) {
@@ -125,9 +130,10 @@ export class ContactService {
      */
     public updateContact = async ( person ): Promise<void> => {
         this.isSaving = true
-        await this.ContactDB.update( person )
+        await this.contactDB.update( person )
         this.isSaving = false
-        this.toaster.pop( "success", "Updated " + person.name )
+        // this.toaster.pop( "success", "Updated " + person.name )
+        console.log( "success", "Updated " + person.name )
     }
 
     /**
@@ -137,11 +143,12 @@ export class ContactService {
     public removeContact = async ( person ): Promise<void> => {
         this.isDeleting = true
         const name: string = person.name
-        await this.ContactDB.remove( person )
+        await this.contactDB.remove( person )
         this.isDeleting = false
         const index: number = this.persons.indexOf( person )
         this.persons.splice( index, 1 )
-        this.toaster.pop( "success", "Deleted " + name )
+        // this.toaster.pop( "success", "Deleted " + name )
+        console.log( "success", "Deleted " + name )
     }
 
     /**
@@ -150,16 +157,18 @@ export class ContactService {
      */
     public createContact = async ( person ): Promise<void> => {
         this.isSaving = true
-        await this.ContactDB.save( person )
+        await this.contactDB.save( person )
         this.isSaving = false
         this.hasMore = true
         this.page = 1
         this.persons = []
         this.loadContacts()
-        this.toaster.pop( "success", "Created " + person.name )
+        // this.toaster.pop( "success", "Created " + person.name )
+        console.log( "success", "Created " + person.name )
     }
 }
 
 angular
     .module( "codecraft" )
-    .service( "ContactService", ContactService )
+    // change from service to factory to downgrade
+    .factory( "ContactService", downgradeInjectable(ContactService) )
