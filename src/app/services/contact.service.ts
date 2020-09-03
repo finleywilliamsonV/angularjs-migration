@@ -3,7 +3,9 @@ import { Inject } from '@angular/core'
 import { downgradeInjectable } from '@angular/upgrade/static'
 
 import * as _ from 'lodash'
+
 import { ContactDB, ContactRouteParams } from './contact.resource'
+import { Toaster } from '../ajs-upgraded-providers'
 
 export interface IContact {
     id: number,
@@ -30,7 +32,6 @@ export class ContactService {
     private page: number
     private hasMore: boolean
     private isLoading: boolean
-    // private selectedPerson: IContact     // why do we need this
     private persons: IContact[]
     private searchString: string
     private sorting: string
@@ -43,17 +44,15 @@ export class ContactService {
     /**
      * Constructor
      * @param ContactDB -- injected 
-     * @param toaster  -- injected
+     * @param Toaster  -- injected from upgraded provider
      */
     constructor( @Inject(ContactDB) private contactDB: ContactDB,
-                // private toaster -- removing for now
-                ) {
+                 @Inject(Toaster) private toaster: any ) {
         this.page = 1
         this.hasMore = true
         this.isLoading = false
         this.isSaving = false
         this.isDeleting = false
-        // this.selectedPerson = null     // why do we need this
         this.persons = []
         this.searchString = ''
         this.sorting = 'name'
@@ -132,7 +131,7 @@ export class ContactService {
         this.isSaving = true
         await this.contactDB.update( person )
         this.isSaving = false
-        // this.toaster.pop( "success", "Updated " + person.name )
+        this.toaster.pop( "success", "Updated " + person.name )
         console.log( "success", "Updated " + person.name )
     }
 
@@ -147,7 +146,7 @@ export class ContactService {
         this.isDeleting = false
         const index: number = this.persons.indexOf( person )
         this.persons.splice( index, 1 )
-        // this.toaster.pop( "success", "Deleted " + name )
+        this.toaster.pop( "success", "Deleted " + name )
         console.log( "success", "Deleted " + name )
     }
 
@@ -163,7 +162,7 @@ export class ContactService {
         this.page = 1
         this.persons = []
         this.loadContacts()
-        // this.toaster.pop( "success", "Created " + person.name )
+        this.toaster.pop( "success", "Created " + person.name )
         console.log( "success", "Created " + person.name )
     }
 }

@@ -36,6 +36,7 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { ContactDB } from './services/contact.resource'
 import { ContactService } from './services/contact.service'
+import { ToasterServiceProvider } from './ajs-upgraded-providers'
 
 /**
  * how to deal with injection
@@ -50,7 +51,8 @@ import { ContactService } from './services/contact.service'
     ],
     providers: [
         ContactDB,
-        ContactService
+        ContactService,
+        ToasterServiceProvider
     ]
   })
   

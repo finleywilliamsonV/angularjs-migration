@@ -5,7 +5,7 @@
        infinite-scroll-immediate-check="false"
        infinite-scroll-distance="1">
 
-    <cc-card ng-repeat="person in personList.ContactService.persons"
+    <cc-card ng-repeat="person in personList.ContactService.persons track by person.id"
              user="person">
     </cc-card>
 
