@@ -33,10 +33,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { ContactDB } from './services/contact.resource'
 import { ContactService } from './services/contact.service'
 import { ToasterServiceProvider } from './ajs-upgraded-providers'
+import { SearchComponent } from './components/search.component';
 
 /**
  * how to deal with injection
@@ -47,12 +49,23 @@ import { ToasterServiceProvider } from './ajs-upgraded-providers'
     imports: [
       BrowserModule,
       UpgradeModule,
-      HttpClientModule
+      HttpClientModule,
+      FormsModule,
+      ReactiveFormsModule
     ],
     providers: [
         ContactDB,
         ContactService,
         ToasterServiceProvider
+    ],
+
+    // VERY IMPORTANT
+    // all components that we need to downgrade should be added to declarations and entryComponents
+    declarations: [
+        SearchComponent
+    ],
+    entryComponents: [
+        SearchComponent
     ]
   })
   

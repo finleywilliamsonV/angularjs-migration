@@ -33,13 +33,13 @@ export class ContactService {
     private hasMore: boolean
     private isLoading: boolean
     private persons: IContact[]
-    private searchString: string
-    private sorting: string
-    private ordering: string
 
     // public memeber vars
     public isSaving: boolean
     public isDeleting: boolean
+    public searchString: string
+    public sorting: string
+    public ordering: string
 
     /**
      * Constructor

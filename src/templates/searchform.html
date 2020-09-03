@@ -1,31 +1,24 @@
 <form class="navbar-form navbar-left">
 
-  <div class="form-group">
-    <input type="text"
-           class="form-control"
-           id="name"
-           ng-model="search.ContactService.searchString"
-           ng-model-options="{ debounce: 300 }"
-           placeholder="Search name..."
-           ng-change="search.ContactService.doSearch()"
-    />
-  </div>
+    <div class="form-group">
+        <input type="text" class="form-control" id="name" ng-model="search.ContactService.searchString"
+            ng-model-options="{ debounce: 300 }" placeholder="Search name..."
+            ng-change="search.ContactService.doSearch()" />
+    </div>
 
-  <div class="form-group">
-    <select class="form-control"
-            ng-model="search.ContactService.sorting"
+    <div class="form-group">
+        <select class="form-control" ng-model="search.ContactService.sorting"
             ng-change="search.ContactService.doSearch()">
-      <option value="name">Name</option>
-      <option value="email">Email</option>
-    </select>
-  </div>
+            <option value="name">Name</option>
+            <option value="email">Email</option>
+        </select>
+    </div>
 
-  <div class="form-group">
-    <select class="form-control"
-            ng-model="search.ContactService.ordering"
+    <div class="form-group">
+        <select class="form-control" ng-model="search.ContactService.ordering"
             ng-change="search.ContactService.doSearch()">
-      <option value="ASC">ASC</option>
-      <option value="DESC">DESC</option>
-    </select>
-  </div>
+            <option value="ASC">ASC</option>
+            <option value="DESC">DESC</option>
+        </select>
+    </div>
 </form>
