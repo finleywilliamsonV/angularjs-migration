@@ -29,7 +29,7 @@ export class ContactService {
     private isLoading: boolean
     // private selectedPerson: IContact     // why do we need this
     private persons: IContact[]
-    private search: unknown
+    private searchString: string
     private sorting: string
     private ordering: string
 
@@ -50,7 +50,7 @@ export class ContactService {
         this.isDeleting = false
         // this.selectedPerson = null     // why do we need this
         this.persons = []
-        this.search = null
+        this.searchString = ''
         this.sorting = 'name'
         this.ordering = 'ASC'
 
@@ -93,16 +93,16 @@ export class ContactService {
             this.isLoading = true
 
             const params: ContactRouteParams = {
-                _page: this.page,
+                _page: this.page.toString(),
                 _sort: this.sorting,
                 _order: this.ordering,
-                q: this.search
+                q: this.searchString
             }
 
-            const response: angular.IHttpResponse<IContact[]> = await this.ContactDB.query( params )
-            this.persons.push( ...response.data )
+            const response = await this.ContactDB.query( params ) as any as IContact[]   // would like this to come back typed as array, but didn't think it was important enough to look into
+            this.persons.push( ...response )
 
-            if ( response.data.length === 0 ) {
+            if ( response.length === 0 ) {
                 this.hasMore = false
             }
             this.isLoading = false

@@ -32,11 +32,22 @@ import { NgModule, NgModuleRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { ContactDB } from './services/contact.resource'
+import { HttpClientModule } from "@angular/common/http";
+
+/**
+ * how to deal with injection
+ * https://codecraft.tv/courses/angularjs-migration/step-7-migrate-services-to-angular/migrate-contact-resource/
+ */
 
 @NgModule({
     imports: [
       BrowserModule,
-      UpgradeModule
+      UpgradeModule,
+      HttpClientModule
+    ],
+    providers: [
+        ContactDB
     ]
   })
   
