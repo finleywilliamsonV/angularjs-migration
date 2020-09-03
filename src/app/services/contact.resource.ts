@@ -11,6 +11,7 @@ export type ContactRouteParams = {
 export class ContactDB {
 
     private readonly apiRoot: string = 'http://localhost:3000/contacts'
+    
     constructor( private $http: angular.IHttpService ) { }
 
     query( params: ContactRouteParams ): angular.IHttpPromise<IContact[]> {
