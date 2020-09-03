@@ -15,6 +15,8 @@ import './components';
 import './filters';
 import './app.routes';
 
+import './polyfills.ts';
+
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faMapMarker, faGift, faEnvelope, faPencilAlt, faTrash, faFemale, faMale } from "@fortawesome/free-solid-svg-icons";
 
