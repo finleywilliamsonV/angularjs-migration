@@ -9,6 +9,9 @@ import 'angular-strap'
 import 'angularjs-toaster'
 import 'angular-ui-router'
 
+// for some reason we need to import the css separately
+import 'angularjs-toaster/toaster.css'
+
 import './app.main'
 import './services'
 import './components'

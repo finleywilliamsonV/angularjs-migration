@@ -1,5 +1,5 @@
 import * as angular from 'angular';
-import { IContact } from '../services/contact.service';
+import { IContact, ContactService } from '../services/contact.service';
 
 const COMPONENT_NAME: string = 'ccCard'
 
@@ -12,7 +12,7 @@ class CardController implements ICardController, angular.IController {
     private isDeleting: boolean
     public user: IContact
 
-    constructor(private ContactService) {
+    constructor(private ContactService: ContactService) {
         this.isDeleting = false
     }
 
