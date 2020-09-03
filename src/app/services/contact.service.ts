@@ -1,6 +1,6 @@
-import * as angular from 'angular';
+import * as angular from 'angular'
 import * as _ from 'lodash'
-import { ContactDB, ContactRouteParams } from './contact.resource';
+import { ContactDB, ContactRouteParams } from './contact.resource'
 
 export interface IContact {
     id: number,
@@ -42,17 +42,17 @@ export class ContactService {
      * @param ContactDB -- injected 
      * @param toaster  -- injected
      */
-    constructor( private ContactDB: ContactDB, private toaster ) {
-        this.page = 1;
-        this.hasMore = true;
-        this.isLoading = false;
-        this.isSaving = false;
-        this.isDeleting = false;
-        // this.selectedPerson = null;     // why do we need this
-        this.persons = [];
-        this.search = null;
-        this.sorting = 'name';
-        this.ordering = 'ASC';
+    constructor( private ContactDB: ContactDB, private toaster) {
+        this.page = 1
+        this.hasMore = true
+        this.isLoading = false
+        this.isSaving = false
+        this.isDeleting = false
+        // this.selectedPerson = null     // why do we need this
+        this.persons = []
+        this.search = null
+        this.sorting = 'name'
+        this.ordering = 'ASC'
 
         this.loadContacts()
     }
@@ -69,20 +69,20 @@ export class ContactService {
      * Performs the search on the db
      */
     public doSearch = (): void => {
-        this.hasMore = true;
-        this.page = 1;
-        this.persons = [];
-        this.loadContacts();
+        this.hasMore = true
+        this.page = 1
+        this.persons = []
+        this.loadContacts()
     }
 
     /**
      * Performs the ordering on the results
      */
     public doOrder = (): void => {
-        this.hasMore = true;
-        this.page = 1;
-        this.persons = [];
-        this.loadContacts();
+        this.hasMore = true
+        this.page = 1
+        this.persons = []
+        this.loadContacts()
     }
 
     /**
@@ -90,22 +90,22 @@ export class ContactService {
      */
     public loadContacts = async (): Promise<void> => {
         if ( this.hasMore && !this.isLoading ) {
-            this.isLoading = true;
+            this.isLoading = true
 
             const params: ContactRouteParams = {
                 _page: this.page,
                 _sort: this.sorting,
                 _order: this.ordering,
                 q: this.search
-            };
+            }
 
             const response: angular.IHttpResponse<IContact[]> = await this.ContactDB.query( params )
             this.persons.push( ...response.data )
 
             if ( response.data.length === 0 ) {
-                this.hasMore = false;
+                this.hasMore = false
             }
-            this.isLoading = false;
+            this.isLoading = false
         }
     }
 
@@ -114,8 +114,8 @@ export class ContactService {
      */
     public loadMore = (): void => {
         if ( this.hasMore && !this.isLoading ) {
-            this.page += 1;
-            this.loadContacts();
+            this.page += 1
+            this.loadContacts()
         }
     }
 
@@ -124,10 +124,10 @@ export class ContactService {
      * @param person 
      */
     public updateContact = async ( person ): Promise<void> => {
-        this.isSaving = true;
+        this.isSaving = true
         await this.ContactDB.update( person )
-        this.isSaving = false;
-        this.toaster.pop( "success", "Updated " + person.name );
+        this.isSaving = false
+        this.toaster.pop( "success", "Updated " + person.name )
     }
 
     /**
@@ -135,13 +135,13 @@ export class ContactService {
      * @param person 
      */
     public removeContact = async ( person ): Promise<void> => {
-        this.isDeleting = true;
-        const name: string = person.name;
+        this.isDeleting = true
+        const name: string = person.name
         await this.ContactDB.remove( person )
-        this.isDeleting = false;
-        const index: number = this.persons.indexOf( person );
-        this.persons.splice( index, 1 );
-        this.toaster.pop( "success", "Deleted " + name );
+        this.isDeleting = false
+        const index: number = this.persons.indexOf( person )
+        this.persons.splice( index, 1 )
+        this.toaster.pop( "success", "Deleted " + name )
     }
 
     /**
@@ -149,14 +149,14 @@ export class ContactService {
      * @param person 
      */
     public createContact = async ( person ): Promise<void> => {
-        this.isSaving = true;
+        this.isSaving = true
         await this.ContactDB.save( person )
-        this.isSaving = false;
-        this.hasMore = true;
-        this.page = 1;
-        this.persons = [];
-        this.loadContacts();
-        this.toaster.pop( "success", "Created " + person.name );
+        this.isSaving = false
+        this.hasMore = true
+        this.page = 1
+        this.persons = []
+        this.loadContacts()
+        this.toaster.pop( "success", "Created " + person.name )
     }
 }
 
