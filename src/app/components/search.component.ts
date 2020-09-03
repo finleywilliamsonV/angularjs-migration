@@ -1,56 +1,26 @@
+// AngularJS imports
 import * as angular from 'angular';
-import { Component, Inject } from '@angular/core';
+
+// Angular imports
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from "@angular/forms";
 import { downgradeComponent } from '@angular/upgrade/static';
 
+// RxJS imports
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators'
 
+// local imports
 import { ContactService } from '../services/contact.service';
 
+// constants
 const COMPONENT_NAME: string = 'search'
-const TEMPLATE_URL: string = 'templates/searchform.html'
-
-interface ISearchController {
-    contactService: ContactService,
-    loadMore: () => void
-}
+const TEMPLATE_URL: string = 'templates/searchform.html' 
 
 @Component( {
     selector: COMPONENT_NAME,
-    template:
-    `
-        <form class="navbar-form navbar-left" [formGroup]="myForm">
-
-            <div class="form-group">
-            <input id="name"
-                   class="form-control"
-                   type="text"
-                   placeholder="Search name..."
-                   formControlName="searchString"/>
-            </div>
-
-            <div class="form-group">
-                <select class="form-control"
-                        formControlName="sorting">
-
-                    <option value="name">Name</option>
-                    <option value="email">Email</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-            
-                <select class="form-control"
-                        formControlName="ordering">
-
-                    <option value="ASC">ASC</option>
-                    <option value="DESC">DESC</option>
-                </select>
-            </div>
-        </form>
-    `
+    templateUrl: TEMPLATE_URL
 } )
-export class SearchComponent implements ISearchController, angular.IController {
+export class SearchComponent implements OnInit {
 
     protected myForm: FormGroup
 
