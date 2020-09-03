@@ -37,9 +37,9 @@ export class ContactService {
     // public memeber vars
     public isSaving: boolean
     public isDeleting: boolean
-    public searchString: string
-    public sorting: string
-    public ordering: string
+    public searchParam: string
+    public sortParam: string
+    public orderParam: string
 
     /**
      * Constructor
@@ -54,9 +54,9 @@ export class ContactService {
         this.isSaving = false
         this.isDeleting = false
         this.persons = []
-        this.searchString = ''
-        this.sorting = 'name'
-        this.ordering = 'ASC'
+        this.searchParam = ''
+        this.sortParam = 'name'
+        this.orderParam = 'ASC'
 
         this.loadContacts()
     }
@@ -98,9 +98,9 @@ export class ContactService {
 
             const params: ContactRouteParams = {
                 _page: this.page.toString(),
-                _sort: this.sorting,
-                _order: this.ordering,
-                q: this.searchString
+                _sort: this.sortParam,
+                _order: this.orderParam,
+                q: this.searchParam
             }
 
             const response: IContact[] = await this.contactDB.query( params )

@@ -26,9 +26,9 @@ export class SearchComponent implements OnInit {
 
     constructor( @Inject( ContactService ) public contactService: ContactService ) {
         this.myForm = new FormGroup({
-            searchString: new FormControl(),
-            sorting: new FormControl('name'),
-            ordering: new FormControl('ASC')
+            searchParam: new FormControl(),
+            sortParam: new FormControl('name'),
+            orderParam: new FormControl('ASC')
         })
     }
 
@@ -40,10 +40,10 @@ export class SearchComponent implements OnInit {
                 distinctUntilChanged(),
                 tap(console.log)
             )
-            .subscribe(({sorting, ordering, searchString}) => {
-                this.contactService.searchString = searchString
-                this.contactService.sorting = sorting
-                this.contactService.ordering = ordering
+            .subscribe(({sortParam, orderParam, searchParam}) => {
+                this.contactService.searchParam = searchParam
+                this.contactService.sortParam = sortParam
+                this.contactService.orderParam = orderParam
                 this.contactService.doSearch()
             })
     }
