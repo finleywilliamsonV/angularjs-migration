@@ -21,24 +21,24 @@ import './app.routes'
 import './polyfills.ts'
 
 // FontAwesome Compatibility
-import { library, dom } from "@fortawesome/fontawesome-svg-core"
-import { faMapMarker, faGift, faEnvelope, faPencilAlt, faTrash, faFemale, faMale } from "@fortawesome/free-solid-svg-icons"
+import { library, dom } from '@fortawesome/fontawesome-svg-core'
+import { faMapMarker, faGift, faEnvelope, faPencilAlt, faTrash, faFemale, faMale } from '@fortawesome/free-solid-svg-icons'
 
-library.add( faMale, faFemale, faMapMarker, faGift, faEnvelope, faPencilAlt, faTrash )
+library.add(faMale, faFemale, faMapMarker, faGift, faEnvelope, faPencilAlt, faTrash)
 dom.watch()
 
 // Angular Booting
-import { NgModule, NgModuleRef } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { UpgradeModule } from '@angular/upgrade/static';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { HttpClientModule } from "@angular/common/http";
+import { NgModule, NgModuleRef } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { UpgradeModule } from '@angular/upgrade/static'
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
+import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { ContactDB } from './services/contact.resource'
 import { ContactService } from './services/contact.service'
 import { ToasterServiceProvider } from './ajs-upgraded-providers'
-import { SearchComponent } from './components/search.component';
+import { SearchComponent } from './components/search.component'
 
 /**
  * how to deal with injection
@@ -47,11 +47,11 @@ import { SearchComponent } from './components/search.component';
 
 @NgModule({
     imports: [
-      BrowserModule,
-      UpgradeModule,
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule
+        BrowserModule,
+        UpgradeModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [
         ContactDB,
@@ -67,19 +67,20 @@ import { SearchComponent } from './components/search.component';
     entryComponents: [
         SearchComponent
     ]
-  })
-  
-  export class AppModule {
-    // Override Angular bootstrap so it doesn't do anything
-    ngDoBootstrap() {
-    }
-  }
+})
 
-  // Bootstrap using the UpgradeModule
+export class AppModule {
+    // Override Angular bootstrap so it doesn't do anything
+    ngDoBootstrap(): void {
+        return
+    }
+}
+
+// Bootstrap using the UpgradeModule
 platformBrowserDynamic()
     .bootstrapModule(AppModule)
     .then((platformRef: NgModuleRef<AppModule>): void => {
-        console.log("Bootstrapping in Hybrid mode with Angular & AngularJS");
-        const upgrade: UpgradeModule = platformRef.injector.get(UpgradeModule) as UpgradeModule;
-        upgrade.bootstrap(document.body, ['codecraft']);
-    });
+        console.log('Bootstrapping in Hybrid mode with Angular & AngularJS')
+        const upgrade: UpgradeModule = platformRef.injector.get(UpgradeModule) as UpgradeModule
+        upgrade.bootstrap(document.body, ['codecraft'])
+    })

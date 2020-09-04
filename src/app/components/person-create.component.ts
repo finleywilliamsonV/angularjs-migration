@@ -1,34 +1,34 @@
-import * as angular from 'angular';
+import * as angular from 'angular'
+import { ContactService, IContact } from '../services/contact.service'
 
 const COMPONENT_NAME: string = 'personCreate'
 
 interface IPersonCreateController {
-    ContactService: any,
-    person: any,
+    ContactService: ContactService,
+    person: IContact,
     save: () => Promise<void>
 }
 
 class PersonCreateController implements IPersonCreateController, angular.IController {
 
-    public ContactService
     public person
 
-    constructor( ContactService,
-                 private $state ) {
-        this.ContactService = ContactService
+    constructor(public ContactService: ContactService,
+                private $state
+    ) {
         this.person = {}
     }
 
     public async save(): Promise<void> {
         await this.ContactService.createContact(this.person)
-        this.$state.go( "list" );
+        this.$state.go('list')
     }
 }
 
 class PersonCreateComponent implements angular.IComponentOptions {
     public templateUrl: string
     public controllerAs: string
-    public controller: any
+    public controller // inferred type
 
     constructor() {
         this.templateUrl = 'templates/create.html'
@@ -38,5 +38,5 @@ class PersonCreateComponent implements angular.IComponentOptions {
 }
 
 angular
-    .module( 'codecraft' )
-    .component( COMPONENT_NAME, new PersonCreateComponent() )
+    .module('codecraft')
+    .component(COMPONENT_NAME, new PersonCreateComponent())

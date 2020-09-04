@@ -7,6 +7,10 @@ import * as _ from 'lodash'
 import { ContactDB, ContactRouteParams } from './contact.resource'
 import { Toaster } from '../ajs-upgraded-providers'
 
+export type Toaster = {
+    pop: (...string) => void
+}
+
 export interface IContact {
     id: number,
     createdTs: string
@@ -46,8 +50,8 @@ export class ContactService {
      * @param ContactDB -- injected 
      * @param Toaster  -- injected from upgraded provider
      */
-    constructor( @Inject(ContactDB) private contactDB: ContactDB,
-                 @Inject(Toaster) private toaster: any ) {
+    constructor(@Inject(ContactDB) private contactDB: ContactDB,
+        @Inject(Toaster) private toaster: Toaster) {
         this.page = 1
         this.hasMore = true
         this.isLoading = false
@@ -65,8 +69,8 @@ export class ContactService {
      * Returns a Contact from the DB
      * @param email 
      */
-    public getPerson = ( email: string ): IContact => {
-        return _.find( this.persons, ( person: IContact ) => person.email == email )
+    public getPerson = (email: string): IContact => {
+        return _.find(this.persons, (person: IContact) => person.email == email)
     }
 
     /**
@@ -93,7 +97,7 @@ export class ContactService {
      * Loads current set of contacts from the db
      */
     public loadContacts = async (): Promise<void> => {
-        if ( this.hasMore && !this.isLoading ) {
+        if (this.hasMore && !this.isLoading) {
             this.isLoading = true
 
             const params: ContactRouteParams = {
@@ -103,10 +107,10 @@ export class ContactService {
                 q: this.searchParam
             }
 
-            const response: IContact[] = await this.contactDB.query( params )
-            this.persons.push( ...response )
+            const response: IContact[] = await this.contactDB.query(params)
+            this.persons.push(...response)
 
-            if ( response.length === 0 ) {
+            if (response.length === 0) {
                 this.hasMore = false
             }
             this.isLoading = false
@@ -117,7 +121,7 @@ export class ContactService {
      * Loads the next page of contacts
      */
     public loadMore = (): void => {
-        if ( this.hasMore && !this.isLoading ) {
+        if (this.hasMore && !this.isLoading) {
             this.page += 1
             this.loadContacts()
         }
@@ -127,47 +131,47 @@ export class ContactService {
      * Updates the contact info for a particular person
      * @param person 
      */
-    public updateContact = async ( person ): Promise<void> => {
+    public updateContact = async (person: IContact): Promise<void> => {
         this.isSaving = true
-        await this.contactDB.update( person )
+        await this.contactDB.update(person)
         this.isSaving = false
-        this.toaster.pop( "success", "Updated " + person.name )
-        console.log( "success", "Updated " + person.name )
+        this.toaster.pop('success', 'Updated ' + person.name)
+        console.log('success', 'Updated ' + person.name)
     }
 
     /**
      * Removes a contact from the DB
      * @param person 
      */
-    public removeContact = async ( person ): Promise<void> => {
+    public removeContact = async (person: IContact): Promise<void> => {
         this.isDeleting = true
         const name: string = person.name
-        await this.contactDB.remove( person )
+        await this.contactDB.remove(person)
         this.isDeleting = false
-        const index: number = this.persons.indexOf( person )
-        this.persons.splice( index, 1 )
-        this.toaster.pop( "success", "Deleted " + name )
-        console.log( "success", "Deleted " + name )
+        const index: number = this.persons.indexOf(person)
+        this.persons.splice(index, 1)
+        this.toaster.pop('success', 'Deleted ' + name)
+        console.log('success', 'Deleted ' + name)
     }
 
     /**
      * Creates a contact and adds it to the DB
      * @param person 
      */
-    public createContact = async ( person ): Promise<void> => {
+    public createContact = async (person: IContact): Promise<void> => {
         this.isSaving = true
-        await this.contactDB.save( person )
+        await this.contactDB.save(person)
         this.isSaving = false
         this.hasMore = true
         this.page = 1
         this.persons = []
         this.loadContacts()
-        this.toaster.pop( "success", "Created " + person.name )
-        console.log( "success", "Created " + person.name )
+        this.toaster.pop('success', 'Created ' + person.name)
+        console.log('success', 'Created ' + person.name)
     }
 }
 
 angular
-    .module( "codecraft" )
+    .module('codecraft')
     // change from service to factory to downgrade
-    .factory( "ContactService", downgradeInjectable(ContactService) )
+    .factory('ContactService', downgradeInjectable(ContactService))
