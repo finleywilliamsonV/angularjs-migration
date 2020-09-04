@@ -1,21 +1,19 @@
-# AngularJS Migration Workshop
+# AngularJS Migration Workshop - Finley's Fork
 
-This the sample project used in the workshop by [Asim Hussain](http://twitter.com/jawache) from [codecraft.tv](codecraft.tv) on _Migrating from AngularJS_
+This a fork of a sample project used in the workshop by [Asim Hussain](http://twitter.com/jawache) from [codecraft.tv](codecraft.tv) on _Migrating from AngularJS_.
+It has been several years since the tutorial was posted and much of it was out of date. This fork runs the same appication as the tutorial, but with all packages updated to the newest version.
 
 ## Setup
 
-The project is bootstrapped using npm but at the same time since this is a use case of migrating an old AngularJS project created some time ago we use bower to install the dependencies since that was the norm until a few years ago.
-
-`npm run setup`
+First, install the packages:
+`npm i`
 
 ## Running
 
-We have a simple server side which we run using 
+Then, in one terminal, run the server:
+`npm run server`
 
-`npm run server` - this runs a json-server and refreshes the data bases on each run so the deleted contacts will appear again.
+In a different terminal/tab, build and serve the application:
+`npm start`
 
-To run the application we type
-
-`npm start` - this loads the application using a local webserver, check the console for the port number to use.
-
-The application is a simple contacts application where you can search, create or edit a contact.
+The console will list the address of the served application, but should be found at [http://localhost:5000/#!/](localhost:5000)
