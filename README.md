@@ -16,4 +16,4 @@ Then, in one terminal, run the server:
 In a different terminal/tab, build and serve the application:
 `npm start`
 
-The console will list the address of the served application, but should be found at [http://localhost:5000/#!/](localhost:5000)
+The console will list the address of the served application, but should be found at [http://localhost:5000/#!/](http://localhost:5000/#!/)
