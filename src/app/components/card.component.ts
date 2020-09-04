@@ -1,5 +1,5 @@
-import * as angular from 'angular';
-import { IContact } from '../services/contact.service';
+import * as angular from 'angular'
+import { IContact, ContactService } from '../services/contact.service'
 
 const COMPONENT_NAME: string = 'ccCard'
 
@@ -12,7 +12,7 @@ class CardController implements ICardController, angular.IController {
     private isDeleting: boolean
     public user: IContact
 
-    constructor(private ContactService) {
+    constructor(private ContactService: ContactService) {
         this.isDeleting = false
     }
 
@@ -25,9 +25,9 @@ class CardController implements ICardController, angular.IController {
 
 class CardComponent implements angular.IComponentOptions {
     public templateUrl: string
-    public bindings: {[boundProperty: string]: string}
+    public bindings: { [boundProperty: string]: string }
     public controllerAs: string
-    public controller: any 
+    public controller // inferred type
 
     constructor() {
         this.templateUrl = 'templates/card.html'

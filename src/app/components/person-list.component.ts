@@ -1,24 +1,22 @@
-import * as angular from 'angular';
+import * as angular from 'angular'
+import { ContactService } from '../services/contact.service'
 
 const COMPONENT_NAME: string = 'personList'
 
 interface IPersonListController {
-    ContactService: any
+    ContactService: ContactService
 }
 
 class PersonListController implements IPersonListController, angular.IController {
 
-    public ContactService
-
-    constructor( ContactService ) {
-        this.ContactService = ContactService
-    }
+    constructor(public ContactService: ContactService) { }
 }
 
 class PersonListComponent implements angular.IComponentOptions {
+
     public templateUrl: string
     public controllerAs: string
-    public controller: any
+    public controller // inferred type
 
     constructor() {
         this.templateUrl = 'templates/list.html'
@@ -28,5 +26,5 @@ class PersonListComponent implements angular.IComponentOptions {
 }
 
 angular
-    .module( 'codecraft' )
-    .component( COMPONENT_NAME, new PersonListComponent() )
+    .module('codecraft')
+    .component(COMPONENT_NAME, new PersonListComponent())

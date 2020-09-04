@@ -1,5 +1,5 @@
-import * as angular from 'angular';
-import { IContact } from '../services/contact.service';
+import * as angular from 'angular'
+import { IContact } from '../services/contact.service'
 
 const COMPONENT_NAME: string = 'personEdit'
 
@@ -12,30 +12,31 @@ class PersonEditController implements IPersonEditController, angular.IController
 
     private person: IContact
 
-    constructor( private ContactService,
-                 private $state,
-                 $stateParams: { email: string } ) {
-        this.person = ContactService.getPerson( $stateParams.email )
+    constructor(private ContactService,
+                private $state,
+                $stateParams: { email: string }
+    ) {
+        this.person = ContactService.getPerson($stateParams.email)
         if (!this.person) {
-            this.$state.go( 'list' )
+            this.$state.go('list')
         }
     }
 
     public async save() {
-        await this.ContactService.updateContact( this.person )
-        this.$state.go( 'list' );
+        await this.ContactService.updateContact(this.person)
+        this.$state.go('list')
     }
 
     public async remove() {
-        await this.ContactService.updateContact( this.person )
-        this.$state.go( 'list' );
+        await this.ContactService.updateContact(this.person)
+        this.$state.go('list')
     }
 }
 
 class PersonEditComponent implements angular.IComponentOptions {
     public templateUrl: string
     public controllerAs: string
-    public controller: any
+    public controller // inferred type
 
     constructor() {
         this.templateUrl = 'templates/edit.html'
@@ -45,5 +46,5 @@ class PersonEditComponent implements angular.IComponentOptions {
 }
 
 angular
-    .module( 'codecraft' )
-    .component( COMPONENT_NAME, new PersonEditComponent() )
+    .module('codecraft')
+    .component(COMPONENT_NAME, new PersonEditComponent())

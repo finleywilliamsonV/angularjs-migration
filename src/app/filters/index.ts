@@ -1,1 +1,1 @@
-import "./default-image.filter";
+import './default-image.filter'
